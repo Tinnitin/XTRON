@@ -19,9 +19,9 @@ public class Xtron_GUI extends javax.swing.JFrame {
      */
     public Xtron_GUI() {
         initComponents();
-         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
- 
-       this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
     }
 
     /**
@@ -184,36 +184,39 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
     private void btn_compileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_compileActionPerformed
         // TODO add your handling code here:
-        String comandos=jTextArea1.getText();
-        String lineas[]= comandos.split("\n");
-        String separar="";
-        String act="";
-        boolean caso=true;
-        int line=0;
-        
-        for (int i = 0; i < lineas.length; i++) {
-            separar=lineas[i];
-            char [] charArray= separar.toCharArray();
-         
-            act=lineas[i];
-            
-            if(charArray.length!=4){
-                line=i+1;
-                
-                TXTAREA.append("LA DIMENSION DEL COMANDO EN LA LINEA "+line+ " es incorrecta\n");
-                TXTAREA.setLineWrap(true);
-            }
+        String comandos = jTextArea1.getText();
+        String lineas[] = comandos.split("\n");
+        String separar = "";
+        String act = "";
+        boolean caso = true;
+        int line = 0;
 
-            else{
-                
-                line=i+1;
-               // JOptionPane.showMessageDialog(null,"LA COMPILACION EN LA LINEA  "+line+" SE REALIZO CON EXITO");
-                TXTAREA.append("LA COMPILACION EN LA LINEA  "+line+" SE REALIZO CON EXITO\n");
+        for (int i = 0; i < lineas.length; i++) {
+            separar = lineas[i];
+            char[] charArray = separar.toCharArray();
+
+            act = lineas[i];
+            if (act.matches("[0-9]+") == false) {
+                line = i + 1;
+                TXTAREA.append("ERROR. El comando en la linea " + i + " solo debe tener numeros\n");
                 TXTAREA.setLineWrap(true);
+
+            } else {
+                if (charArray.length != 4) {
+                    line = i + 1;
+
+                    TXTAREA.append("LA DIMENSION DEL COMANDO EN LA LINEA " + line + " ES INCORRECTA\n");
+                    TXTAREA.setLineWrap(true);
+                } else {
+
+                    line = i + 1;
+                    // JOptionPane.showMessageDialog(null,"LA COMPILACION EN LA LINEA  "+line+" SE REALIZO CON EXITO");
+                    TXTAREA.append("LA COMPILACION EN LA LINEA  " + line + " SE REALIZO CON EXITO\n");
+                    TXTAREA.setLineWrap(true);
+                }
+
             }
-                
         }
-        
     }//GEN-LAST:event_btn_compileActionPerformed
 
     private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
