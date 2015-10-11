@@ -61,25 +61,40 @@ public class Xtron_IO {
         return memory;
     }
 
-    public void escribirTextoArchivo(String nombreArchivo, String texto) {
-        FileWriter salida = null;
-        try {
-            salida = new FileWriter(nombreArchivo);
-            BufferedWriter escritor = new BufferedWriter(salida);
+//    public void escribirTextoArchivo(String nombreArchivo, String texto) {
+//        FileWriter salida = null;
+//        try {
+//            salida = new FileWriter(nombreArchivo);
+//            BufferedWriter escritor = new BufferedWriter(salida);
+//            escritor.write(texto);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (salida != null) {
+//                try {
+//                    salida.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//    }
+    public void guardarArchivo(String nombre,String texto) throws IOException {
+//    JFileChooser fileChooser = new JFileChooser();
+//    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//    if (JFileChooser.APPROVE_OPTION == fileChooser.showSaveDialog(ventana)) {
+//        File archivo = fileChooser.getSelectedFile();
+        FileWriter escritor = null;
+       
+            escritor = new FileWriter(nombre);
             escritor.write(texto);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (salida != null) {
-                try {
-                    salida.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+       
+                escritor.close();
+            
         }
+    
 
-    }
 
 //   public static void main(String[] args) {
 ////    ArchivoMuestra archivo = new ArchivoMuestra();

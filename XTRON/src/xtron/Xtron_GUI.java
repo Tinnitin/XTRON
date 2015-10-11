@@ -5,6 +5,9 @@
  */
 package xtron;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -17,11 +20,14 @@ public class Xtron_GUI extends javax.swing.JFrame {
     /**
      * Creates new form Xtron_GUI
      */
+    public boolean compila;
+    int name;
     public Xtron_GUI() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+         name = 0;
     }
 
     /**
@@ -40,7 +46,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
         btn_run = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtComandos = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         TXTAREA = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
@@ -76,10 +82,15 @@ public class Xtron_GUI extends javax.swing.JFrame {
         });
 
         btn_save.setText("SAVE");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtComandos.setColumns(20);
+        txtComandos.setRows(5);
+        jScrollPane2.setViewportView(txtComandos);
 
         TXTAREA.setColumns(20);
         TXTAREA.setRows(5);
@@ -184,7 +195,8 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
     private void btn_compileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_compileActionPerformed
         // TODO add your handling code here:
-        String comandos = jTextArea1.getText();
+        TXTAREA.setText(null);
+        String comandos = txtComandos.getText();
         String lineas[] = comandos.split("\n");
         String separar = "";
         String act = "";
@@ -198,15 +210,17 @@ public class Xtron_GUI extends javax.swing.JFrame {
             act = lineas[i];
             if (act.matches("[0-9]+") == false) {
                 line = i + 1;
-                TXTAREA.append("ERROR. El comando en la linea " + i + " solo debe tener numeros\n");
+                TXTAREA.append("ERROR. El comando en la linea " + line + " solo debe tener numeros\n");
                 TXTAREA.setLineWrap(true);
+                compila = false;
 
             } else {
                 if (charArray.length != 4) {
                     line = i + 1;
 
-                    TXTAREA.append("LA DIMENSION DEL COMANDO EN LA LINEA " + line + " ES INCORRECTA\n");
+                    TXTAREA.append("ERROR. LA DIMENSION DEL COMANDO EN LA LINEA " + line + " ES INCORRECTA\n");
                     TXTAREA.setLineWrap(true);
+                    compila = false;
                 } else {
 
                     line = i + 1;
@@ -222,6 +236,26 @@ public class Xtron_GUI extends javax.swing.JFrame {
     private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_runActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        
+        String save = "";
+        String comandos = txtComandos.getText();
+        String lineas[] = comandos.split("\n");
+        for (int i = 0; i < lineas.length - 1; i++) {
+            save += lineas[i] + "\r\n";
+        }
+        Xtron_IO saves = new Xtron_IO();
+        try {
+            saves.guardarArchivo("file" + name + ".txt", save);
+            name++;
+
+        } catch (IOException ex) {
+            Logger.getLogger(Xtron_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_btn_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,7 +305,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea txtComandos;
     // End of variables declaration//GEN-END:variables
 }
