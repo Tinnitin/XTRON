@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Xtron_IO {
 
     public String[] leerTextoArchivo(String nombreArchivo) {
-        String memory[];
+        String program[];
         int cont = 0;
         int cont2 = 0;
 //   String actual="";//para asignar cada vez que la linea del txt no este vacia
@@ -43,7 +43,7 @@ public class Xtron_IO {
                 cont2++;
             }
 
-            memory = memory2;
+            program = memory2;
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Archivo no encontrado");
@@ -58,7 +58,7 @@ public class Xtron_IO {
                 }
             }
         }
-        return memory;
+        return program;
     }
 
 //    public void escribirTextoArchivo(String nombreArchivo, String texto) {
