@@ -17,12 +17,12 @@ public class Xtron_Cpu {
  String instructionRegister;//pocision de la siguiente instruccion 
  String operateCode;// indica la operacion a realizar
  String operand;// donde guardo la operacion
- String acumulator;
+ int acumulator;
     public Xtron_Cpu() {
        this.memory = new String[99];
-       this.acumulator="+0000";
+       this.acumulator=0;
        this.instructionCounter=0;
-       this.instructionRegister="+0000";
+       this.instructionRegister="0000";
        this.operateCode="00";
        this.operand="00";   
       
@@ -41,24 +41,56 @@ public class Xtron_Cpu {
            
            switch(operateCode)
         {
-            case "10":
+            case "10"://"READ una variable y la guarda en operand";
                
-                //"READ";
+                
                 break;
             case "11":
               //  "WRITE";
                 break;
             case "20":
                // "LOAD";
+            if(Integer.parseInt(operand)>program.length){
+          
+                acumulator= Integer.parseInt(memory[Integer.parseInt(operand)])  ;
+            }
+            else{
+            ///error de compilacion
+            }
+                
                 break;
             case "21":
                // "STORE";
-                break;
+                if(Integer.parseInt(operand)>program.length){
+          
+                memory[Integer.parseInt(operand)]=acumulator+"";
+            }
+                else{
+                    
+                 ///error de compilacion
+               }
+                 break;
             case "30":
                 //"ADD";
+                   if(Integer.parseInt(operand)>program.length){
+          
+                   acumulator= acumulator+Integer.parseInt(memory[Integer.parseInt(operand)]);
+            }
+                else{
+                    
+                 ///error de compilacion
+               }
                 break;
             case "31":
              // "SUBTRACT";
+                if(Integer.parseInt(operand)>program.length){
+          
+                  
+            }
+                else{
+                    
+                 ///error de compilacion
+               }
                 break;
             case "32":
                // "DIBIDE";
@@ -94,6 +126,7 @@ public class Xtron_Cpu {
     }
     //
     public boolean validateProgram(String []program){
+    
     
         //hoadslfjadslfalskfjaslfdsñf
         return true;
