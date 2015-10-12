@@ -39,7 +39,7 @@ public class Xtron_Cpu_Test {
          Xtron_IO io= new Xtron_IO();
          String program[];
         program= io.leerTextoArchivo("Prueba.txt");
-        
+ 
          Xtron_Cpu x=new Xtron_Cpu();
          x.CPU(program);
          System.out.println(x.getAcumulator());
