@@ -53,8 +53,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TXTAREA = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TXATUTORIAL = new javax.swing.JTextArea();
@@ -107,6 +106,8 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         jLabel1.setText("COMPILE STATE");
 
+        jButton3.setText("LOAD");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -116,12 +117,16 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_compile)
-                            .addComponent(btn_save)
-                            .addComponent(btn_run))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btn_compile)
+                                .addComponent(btn_save)
+                                .addComponent(btn_run))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addGap(20, 20, 20)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -138,7 +143,9 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 .addComponent(btn_run)
                 .addGap(48, 48, 48)
                 .addComponent(btn_save)
-                .addGap(0, 256, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(jButton3)
+                .addGap(0, 181, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -152,27 +159,6 @@ public class Xtron_GUI extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("NEW", jPanel1);
-
-        jTextField1.setText("jTextField1");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(599, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(342, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("LOAD", jPanel2);
 
         TXATUTORIAL.setColumns(20);
         TXATUTORIAL.setRows(5);
@@ -205,7 +191,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -229,7 +215,10 @@ public class Xtron_GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,6 +227,44 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        this.TXATUTORIAL.setText("CREDITOS\nIgnacio Monge Valverde  B34396 \nAgustin Camacho Mora B2302");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        this.TXATUTORIAL.setText("ESTE ES UN TUTORIAL CON LAS OPERACIONES BASICAS QUE REALIZA LA MAQUINA XTRON\n\n\n"
+            + "CODIGO DE OPERACION                             SIGNIFICADO\n\n"
+            + "READ  10                                         "
+            + "                     Lee una palabra desde el teclado y la introduce"
+            + "en una ubicacion especifica de memoria\n\n"
+            + "WRITE 11 ");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+
+        String save = "";
+        String comandos = txtComandos.getText();
+        String lineas[] = comandos.split("\n");
+        for (int i = 0; i < lineas.length - 1; i++) {
+            save += lineas[i] + "\r\n";
+        }
+        Xtron_IO saves = new Xtron_IO();
+        try {
+            saves.guardarArchivo("file" + name + ".txt", save);
+            name++;
+
+        } catch (IOException ex) {
+            Logger.getLogger(Xtron_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_runActionPerformed
 
     private void btn_compileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_compileActionPerformed
         // TODO add your handling code here:
@@ -279,47 +306,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_compileActionPerformed
 
-    private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btn_runActionPerformed
-
  
-
-    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-
-        String save = "";
-        String comandos = txtComandos.getText();
-        String lineas[] = comandos.split("\n");
-        for (int i = 0; i < lineas.length - 1; i++) {
-            save += lineas[i] + "\r\n";
-        }
-        Xtron_IO saves = new Xtron_IO();
-        try {
-            saves.guardarArchivo("file" + name + ".txt", save);
-            name++;
-
-        } catch (IOException ex) {
-            Logger.getLogger(Xtron_GUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-    }//GEN-LAST:event_btn_saveActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        this.TXATUTORIAL.setText("ESTE ES UN TUTORIAL CON LAS OPERACIONES BASICAS QUE REALIZA LA MAQUINA XTRON\n\n\n"
-                + "CODIGO DE OPERACION                             SIGNIFICADO\n\n"
-                + "READ  10                                         "
-                + "                     Lee una palabra desde el teclado y la introduce"
-                + "en una ubicacion especifica de memoria\n\n"
-                + "WRITE 11 ");
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        this.TXATUTORIAL.setText("CREDITOS\nIgnacio Monge Valverde  B34396 \nAgustin Camacho Mora B2302");
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -367,16 +354,15 @@ public class Xtron_GUI extends javax.swing.JFrame {
     private javax.swing.JButton btn_save;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextArea txtComandos;
     // End of variables declaration//GEN-END:variables
 }
