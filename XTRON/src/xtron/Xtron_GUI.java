@@ -5,9 +5,13 @@
  */
 package xtron;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -96,17 +100,20 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         txtComandos.setColumns(20);
         txtComandos.setRows(5);
-        txtComandos.setText("hhh");
         jScrollPane2.setViewportView(txtComandos);
 
         TXTAREA.setColumns(20);
         TXTAREA.setRows(5);
-        TXTAREA.setText("bbbb");
         jScrollPane1.setViewportView(TXTAREA);
 
         jLabel1.setText("COMPILE STATE");
 
         jButton3.setText("LOAD");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -158,7 +165,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("NEW", jPanel1);
+        jTabbedPane1.addTab("FILE", jPanel1);
 
         TXATUTORIAL.setColumns(20);
         TXATUTORIAL.setRows(5);
@@ -253,9 +260,14 @@ public class Xtron_GUI extends javax.swing.JFrame {
         }
         Xtron_IO saves = new Xtron_IO();
         try {
+            if(save!=""){
             saves.guardarArchivo("file" + name + ".txt", save);
             name++;
-
+            JOptionPane.showMessageDialog(null,"SE HA GUARDADO CON EXITO");
+            }else{
+                JOptionPane.showMessageDialog(null,"NO HAY COMANDOS PARA GUARDAR");
+            }
+            
         } catch (IOException ex) {
             Logger.getLogger(Xtron_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -305,6 +317,30 @@ public class Xtron_GUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btn_compileActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+//        JFileChooser chooser = new JFileChooser();
+//chooser.setApproveButtonText("Abrir TxT");
+//chooser.addChoosableFileFilter(new TxTFilter());
+//chooser.showOpenDialog(null);
+//File archivo=chooser.getSelectedFile();
+        txtComandos.setText(null);
+        TXTAREA.setText(null);
+        JFileChooser chooser = new JFileChooser();
+chooser.setApproveButtonText("Abrir TxT");
+chooser.addChoosableFileFilter(new TxTFilter());
+chooser.showOpenDialog(null);
+File archivo=chooser.getSelectedFile();
+try {
+BufferedReader reader = new BufferedReader(new FileReader(archivo));
+String linea = reader.readLine();
+while (linea != null) {
+txtComandos.append(linea + "\n");
+linea = reader.readLine();
+}
+} catch (Exception ex) {
+}
+    }//GEN-LAST:event_jButton3ActionPerformed
 
  
 
