@@ -36,7 +36,7 @@ public class Xtron_Cpu {
 
     }
 
-    public String[] CPU(String[] program) {
+    public String[] CPU(String[] program) throws Xtron_Exeption {
 
         boolean validProgram = validateProgram(program);
         if (validProgram == true) {//el programa es valido
@@ -61,14 +61,13 @@ public class Xtron_Cpu {
 
                             if (memory[Integer.parseInt(operand)] != null) {
                                 acumulator = Integer.parseInt(memory[Integer.parseInt(operand)]);
-                                return memory;
                             } else {
-                                System.out.print("La poscicion: " + operand + " en memoria es nula ");
+                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta cargar la posicion " + operand + "que es nula");
 
                             }
 
                         } else {
-                            System.out.print("Error de compilacion intenta cargar una intruccion del programa en el acumulador");
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede cargar en el acumuador");
                         }
 
                         break;
@@ -77,8 +76,9 @@ public class Xtron_Cpu {
                         if (Integer.parseInt(operand) >= program.length) {
 
                             memory[Integer.parseInt(operand)] = acumulator + "";
-                            return memory;
+
                         } else {
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede almacenar el acumulador en esa pocision");
 
                             ///error de compilacion
                         }
@@ -90,14 +90,13 @@ public class Xtron_Cpu {
                             if (memory[Integer.parseInt(operand)] != null) {
 
                                 acumulator = acumulator + Integer.parseInt(memory[Integer.parseInt(operand)]);
-                                 return memory;
+
                             } else {
-                                System.out.print("Error de compilacion intenta sumar un valor null al acumulador");
+                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta sumar la posicion " + operand + "de memoria que es nula");
                             }
 
                         } else {
-
-                            ///error de compilacion
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede sumar al  acumulador");
                         }
                         break;
                     case "31":
@@ -106,13 +105,13 @@ public class Xtron_Cpu {
                         if (Integer.parseInt(operand) >= program.length) {
                             if (memory[Integer.parseInt(operand)] != null) {
                                 acumulator = acumulator - Integer.parseInt(memory[Integer.parseInt(operand)]);
-                                 return memory;
+
                             } else {
-                                System.out.print("Error de compilacion intenta restar un valor null al acumulador");
+                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta restar la posicion " + operand + "de memoria que es nula");
                             }
 
                         } else {
-
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede restar al  acumulador");
                         }                            ///error de compilacion
 
                         break;
@@ -121,12 +120,12 @@ public class Xtron_Cpu {
                         if (Integer.parseInt(operand) >= program.length) {
                             if (memory[Integer.parseInt(operand)] != null && Integer.parseInt(memory[Integer.parseInt(operand)]) != 0) {
                                 acumulator = acumulator / Integer.parseInt(memory[Integer.parseInt(operand)]);
-                                 return memory;
+
                             } else {
-                                System.out.print("intenta dividir entre un null o entre cero");
+                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta dividir  la posicion " + operand + "de memoria que es nula o es cero");
                             }
                         } else {
-
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede dividir  al  acumulador");
                             ///error de compilacion
                         }
                         break;
@@ -135,15 +134,14 @@ public class Xtron_Cpu {
                         if (Integer.parseInt(operand) >= program.length) {
                             if (memory[Integer.parseInt(operand)] != null) {
                                 acumulator = acumulator * Integer.parseInt(memory[Integer.parseInt(operand)]);
-                                 return memory;
-                            } else {
 
-                                System.out.print("intenta multiplicar por un valor nulo");
+                            } else {
+                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta multiplicar   la posicion " + operand + "de memoria que es nula ");
+
                             }
 
                         } else {
-
-                            ///error de compilacion
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede multiplicar al  acumulador");
                         }
                         break;
                     case "40":
@@ -154,8 +152,8 @@ public class Xtron_Cpu {
                             i = Integer.parseInt(operand) - 1;
 
                         } else {
-
-                            ///error de compilacion
+                  
+                           
                         }
                         break;
                     case "41":
@@ -166,7 +164,7 @@ public class Xtron_Cpu {
                                 i = Integer.parseInt(operand) - 1;
                             } else {
                                 System.out.print("sali soy negativo");
-                                return memory;
+
                             }
 
                         } else {
@@ -178,12 +176,12 @@ public class Xtron_Cpu {
                         //"BRANCHZERO";
                         if (Integer.parseInt(operand) < program.length) {
                             if (acumulator != 0) {
-                                instructionCounter = Integer.parseInt(operand)-1;
-                                i = Integer.parseInt(operand)-1;
-                              
-                            }else {
+                                instructionCounter = Integer.parseInt(operand) - 1;
+                                i = Integer.parseInt(operand) - 1;
+
+                            } else {
                                 System.out.print("sali soy cero");
-                                return memory;
+
                             }
                         } else {
 
@@ -209,168 +207,164 @@ public class Xtron_Cpu {
         return memory;
 
     }
-     public String[] CPU_Debuger(String[] program,int instructionCounter,int totalInstruction) {
 
-    
-            for (int i = 0; i <= program.length - 1; i++) {
+    public String[] CPU_Debuger(String[] program, int instructionCounter, int totalInstruction) {
 
-                instructionRegister = memory[instructionCounter];
-                operateCode = instructionRegister.substring(0, 2);
-                operand = instructionRegister.substring(2, 4);
+        for (int i = 0; i <= program.length - 1; i++) {
 
-                switch (operateCode) {
-                    case "10"://Read lee una palabra desde el teclado y la guarda en una pocision espesifica
+            instructionRegister = memory[instructionCounter];
+            operateCode = instructionRegister.substring(0, 2);
+            operand = instructionRegister.substring(2, 4);
 
-                        break;
-                    case "11":
-                        //  "WRITE";toma una palabra de una ubicacion espesifica y la imprime en pantalla
-                        break;
-                    case "20":
-                        // "LOAD";toma una palabra de memoria y la colca en el acumulador 
-                        if (Integer.parseInt(operand) >= program.length) {
+            switch (operateCode) {
+                case "10"://Read lee una palabra desde el teclado y la guarda en una pocision espesifica
 
-                            if (memory[Integer.parseInt(operand)] != null) {
-                                acumulator = Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            } else {
-                                System.out.print("La poscicion: " + operand + " en memoria es nula ");
+                    break;
+                case "11":
+                    //  "WRITE";toma una palabra de una ubicacion espesifica y la imprime en pantalla
+                    break;
+                case "20":
+                    // "LOAD";toma una palabra de memoria y la colca en el acumulador 
+                    if (Integer.parseInt(operand) >= program.length) {
 
-                            }
-
+                        if (memory[Integer.parseInt(operand)] != null) {
+                            acumulator = Integer.parseInt(memory[Integer.parseInt(operand)]);
                         } else {
-                            System.out.print("Error de compilacion intenta cargar una intruccion del programa en el acumulador");
+                            System.out.print("La poscicion: " + operand + " en memoria es nula ");
+
                         }
 
-                        break;
-                    case "21":
-                        // "STORE";almacena el acumulador en una pocision de memoria
-                        if (Integer.parseInt(operand) >= program.length) {
+                    } else {
+                        System.out.print("Error de compilacion intenta cargar una intruccion del programa en el acumulador");
+                    }
 
-                            memory[Integer.parseInt(operand)] = acumulator + "";
+                    break;
+                case "21":
+                    // "STORE";almacena el acumulador en una pocision de memoria
+                    if (Integer.parseInt(operand) >= program.length) {
+
+                        memory[Integer.parseInt(operand)] = acumulator + "";
+                    } else {
+
+                        ///error de compilacion
+                    }
+                    break;
+                case "30":
+                    //"ADD";suma una pocision de memoria al acumulador y mantiene la suma ahi
+
+                    if (Integer.parseInt(operand) >= program.length) {
+                        if (memory[Integer.parseInt(operand)] != null) {
+
+                            acumulator = acumulator + Integer.parseInt(memory[Integer.parseInt(operand)]);
                         } else {
-
-                            ///error de compilacion
+                            System.out.print("Error de compilacion intenta sumar un valor null al acumulador");
                         }
-                        break;
-                    case "30":
-                        //"ADD";suma una pocision de memoria al acumulador y mantiene la suma ahi
 
-                        if (Integer.parseInt(operand) >= program.length) {
-                            if (memory[Integer.parseInt(operand)] != null) {
+                    } else {
 
-                                acumulator = acumulator + Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            } else {
-                                System.out.print("Error de compilacion intenta sumar un valor null al acumulador");
-                            }
+                        ///error de compilacion
+                    }
+                    break;
+                case "31":
+                    // "SUBTRACT";resta una poscision de memoria al acumulador 
 
+                    if (Integer.parseInt(operand) >= program.length) {
+                        if (memory[Integer.parseInt(operand)] != null) {
+                            acumulator = acumulator - Integer.parseInt(memory[Integer.parseInt(operand)]);
                         } else {
-
-                            ///error de compilacion
+                            System.out.print("Error de compilacion intenta restar un valor null al acumulador");
                         }
-                        break;
-                    case "31":
-                        // "SUBTRACT";resta una poscision de memoria al acumulador 
 
-                        if (Integer.parseInt(operand) >= program.length) {
-                            if (memory[Integer.parseInt(operand)] != null) {
-                                acumulator = acumulator - Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            } else {
-                                System.out.print("Error de compilacion intenta restar un valor null al acumulador");
-                            }
+                    } else {
 
+                    }                            ///error de compilacion
+
+                    break;
+                case "32":
+                    // "DIBIDE";
+                    if (Integer.parseInt(operand) >= program.length) {
+                        if (memory[Integer.parseInt(operand)] != null && Integer.parseInt(memory[Integer.parseInt(operand)]) != 0) {
+                            acumulator = acumulator / Integer.parseInt(memory[Integer.parseInt(operand)]);
                         } else {
-
-                        }                            ///error de compilacion
-
-                        break;
-                    case "32":
-                        // "DIBIDE";
-                        if (Integer.parseInt(operand) >= program.length) {
-                            if (memory[Integer.parseInt(operand)] != null && Integer.parseInt(memory[Integer.parseInt(operand)]) != 0) {
-                                acumulator = acumulator / Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            } else {
-                                System.out.print("intenta dividir entre un null o entre cero");
-                            }
-                        } else {
-
-                            ///error de compilacion
+                            System.out.print("intenta dividir entre un null o entre cero");
                         }
-                        break;
-                    case "33":
-                        //"MULTIPLY";
-                        if (Integer.parseInt(operand) >= program.length) {
-                            if (memory[Integer.parseInt(operand)] != null) {
-                                acumulator = acumulator * Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            } else {
+                    } else {
 
-                                System.out.print("intenta multiplicar por un valor nulo");
-                            }
-
+                        ///error de compilacion
+                    }
+                    break;
+                case "33":
+                    //"MULTIPLY";
+                    if (Integer.parseInt(operand) >= program.length) {
+                        if (memory[Integer.parseInt(operand)] != null) {
+                            acumulator = acumulator * Integer.parseInt(memory[Integer.parseInt(operand)]);
                         } else {
 
-                            ///error de compilacion
+                            System.out.print("intenta multiplicar por un valor nulo");
                         }
-                        break;
-                    case "40":
-                        // "BRANCH";
-                        if (Integer.parseInt(operand) < program.length) {
 
+                    } else {
+
+                        ///error de compilacion
+                    }
+                    break;
+                case "40":
+                    // "BRANCH";
+                    if (Integer.parseInt(operand) < program.length) {
+
+                        instructionCounter = Integer.parseInt(operand) - 1;
+                        i = Integer.parseInt(operand) - 1;
+
+                    } else {
+
+                        ///error de compilacion
+                    }
+                    break;
+                case "41":
+                    // "BRANCHNEG";
+                    if (Integer.parseInt(operand) < program.length) {
+                        if (acumulator >= 0) {
+                            instructionCounter = Integer.parseInt(operand) - 1;
+                            i = Integer.parseInt(operand) - 1;
+                        } else {
+                            System.out.print("sali soy negativo");
+                            return null;
+                        }
+
+                    } else {
+
+                        ///error de compilacion
+                    }
+                    break;
+                case "42":
+                    //"BRANCHZERO";
+                    if (Integer.parseInt(operand) < program.length) {
+                        if (acumulator != 0) {
                             instructionCounter = Integer.parseInt(operand) - 1;
                             i = Integer.parseInt(operand) - 1;
 
                         } else {
-
-                            ///error de compilacion
+                            System.out.print("sali soy cero");
+                            return null;
                         }
-                        break;
-                    case "41":
-                        // "BRANCHNEG";
-                        if (Integer.parseInt(operand) < program.length) {
-                            if (acumulator >= 0) {
-                                instructionCounter = Integer.parseInt(operand) - 1;
-                                i = Integer.parseInt(operand) - 1;
-                            } else {
-                                System.out.print("sali soy negativo");
-                                return null;
-                            }
+                    } else {
 
-                        } else {
+                        ///error de compilacion
+                    }
+                    break;
+                case "43":
+                    // "HALT";finaliza  el programa
+                    return memory;
 
-                            ///error de compilacion
-                        }
-                        break;
-                    case "42":
-                        //"BRANCHZERO";
-                        if (Integer.parseInt(operand) < program.length) {
-                            if (acumulator != 0) {
-                                instructionCounter = Integer.parseInt(operand)-1;
-                                i = Integer.parseInt(operand)-1;
-                              
-                            }else {
-                                System.out.print("sali soy cero");
-                                return null;
-                            }
-                        } else {
+                default:
 
-                            ///error de compilacion
-                        }
-                        break;
-                    case "43":
-                        // "HALT";finaliza  el programa
-                        return memory;
-
-                    default:
-
-                        break;
-                }
-                instructionCounter++;
+                    break;
             }
-            return memory;
-
-       
-       
+            instructionCounter++;
+        }
+        return memory;
 
     }
-
 
     //
     public boolean validateProgram(String[] program) {
