@@ -30,7 +30,7 @@ public class Xtron_Cpu {
 
     }
 
-    public String[] CPU(String[] program) throws Xtron_Exeption {
+    public String[] CPU_Run(String[] program) throws Xtron_Exeption {
 
         boolean validProgram = validateProgram(program);
         if (validProgram == true) {//el programa es valido
@@ -216,6 +216,7 @@ public class Xtron_Cpu {
         return memory;
 
     }
+    
 
     public String[] CPU_Debuger(String[] program, int positionIntruction, int totalIntruction) throws Xtron_Exeption {
         boolean ciclo = false;
@@ -231,14 +232,16 @@ public class Xtron_Cpu {
             switch (operateCode) {
                 case "10"://Read lee una palabra desde el teclado y la guarda en una pocision espesifica
                     String numero = "";
-                    boolean correcto = false;
+                    boolean correcto ;
+                    correcto=false;
                     if (Integer.parseInt(operand) >= totalIntruction) {
-                        while (correcto = false) {
-                            numero = JOptionPane.showInputDialog("Ingrese su numero:");
+                        while (correcto == false) {
+                            
+                            numero = JOptionPane.showInputDialog("Ingrese su numero: ");
                             correcto = validaNumero(numero);
                         }
                         memory[Integer.parseInt(operand)] = numero + "";
-                        if (ciclo = false) {
+                        if (ciclo == false) {
                             return memory;
                         }
 
@@ -249,7 +252,7 @@ public class Xtron_Cpu {
                     //  "WRITE";toma una palabra de una ubicacion espesifica y la imprime en pantalla
                     if (memory[Integer.parseInt(operand)] != null) {
                         JOptionPane.showMessageDialog(null, memory[Integer.parseInt(operand)]);
-                        if (ciclo = false) {
+                        if (ciclo == false) {
                             return memory;
                         }
 
@@ -264,7 +267,7 @@ public class Xtron_Cpu {
 
                         if (memory[Integer.parseInt(operand)] != null) {
                             acumulator = Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            if (ciclo = false) {
+                            if (ciclo ==false) {
                                 return memory;
                             }
                         } else {
@@ -280,7 +283,7 @@ public class Xtron_Cpu {
                     if (Integer.parseInt(operand) >= totalIntruction) {
 
                         memory[Integer.parseInt(operand)] = acumulator + "";
-                        if (ciclo = false) {
+                        if (ciclo == false) {
                             return memory;
                         }
                     } else {
@@ -295,7 +298,7 @@ public class Xtron_Cpu {
                         if (memory[Integer.parseInt(operand)] != null) {
 
                             acumulator = acumulator + Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            if (ciclo = false) {
+                            if (ciclo == false) {
                                 return memory;
                             }
                         } else {
@@ -312,7 +315,7 @@ public class Xtron_Cpu {
                     if (Integer.parseInt(operand) >= program.length) {
                         if (memory[Integer.parseInt(operand)] != null) {
                             acumulator = acumulator - Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            if (ciclo = false) {
+                            if (ciclo == false) {
                                 return memory;
                             }
                         } else {
@@ -329,7 +332,7 @@ public class Xtron_Cpu {
                     if (Integer.parseInt(operand) >= totalIntruction) {
                         if (memory[Integer.parseInt(operand)] != null && Integer.parseInt(memory[Integer.parseInt(operand)]) != 0) {
                             acumulator = acumulator / Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            if (ciclo = false) {
+                            if (ciclo == false) {
                                 return memory;
                             }
                         } else {
@@ -345,7 +348,7 @@ public class Xtron_Cpu {
                     if (Integer.parseInt(operand) >= totalIntruction) {
                         if (memory[Integer.parseInt(operand)] != null) {
                             acumulator = acumulator * Integer.parseInt(memory[Integer.parseInt(operand)]);
-                            if (ciclo = false) {
+                            if (ciclo == false) {
                                 return memory;
                             }
                         } else {

@@ -40,7 +40,7 @@ public class Xtron_Cpu_Test {
      @Test
     public void hello() {
          Xtron_IO io= new Xtron_IO();
-         String program[],res[];
+         String program[];
         program= io.leerTextoArchivo("debug.txt");
         
         
@@ -48,14 +48,16 @@ public class Xtron_Cpu_Test {
         
          for (int i = 0; i < program.length-1; i++) {
              try {
-                 res=cpu.CPU_Debuger(program, i, program.length);
+                 program=cpu.CPU_Debuger(program, i, 3);
+                 System.out.print(cpu.getAcumulator());
                  
-                 for (String re : res) {
-                     System.out.println(re);
-                 }
-                 program=res;
+//                 for (String re : program) {
+//                     System.out.println(re);
+//                 }
+//                
+                 
              } catch (Xtron_Exeption ex) {
-                 Logger.getLogger(Xtron_Cpu_Test.class.getName()).log(Level.SEVERE, null, ex);
+                 System.out.println(ex.getMessage());
              }
              
          }
