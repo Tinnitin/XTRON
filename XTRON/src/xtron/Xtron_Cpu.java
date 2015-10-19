@@ -22,12 +22,6 @@ public class Xtron_Cpu {
 
     public Xtron_Cpu() {
         this.memory = new String[99];
-        this.memory[8] = "20";
-        this.memory[9] = "10";
-        this.memory[10] = "10";
-        this.memory[11] = "4";
-        this.memory[12] = "4";
-        this.memory[13] = "1";
         this.acumulator = 0;
         this.instructionCounter = 0;
         this.instructionRegister = "0000";
@@ -50,10 +44,29 @@ public class Xtron_Cpu {
 
                 switch (operateCode) {
                     case "10"://Read lee una palabra desde el teclado y la guarda en una pocision espesifica
+                        String numero = "";
+                        boolean correcto = false;
+                        if (Integer.parseInt(operand) >= program.length) {
+                            while (correcto = false) {
+                                numero = JOptionPane.showInputDialog("Ingrese su numero");
+                                correcto = validaNumero(numero);
+                            }
+                            memory[Integer.parseInt(operand)] = numero + "";
+
+                        } else {
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede guardar ningun numero en esa pocision");
+                        }
 
                         break;
                     case "11":
                         //  "WRITE";toma una palabra de una ubicacion espesifica y la imprime en pantalla
+                        if (memory[Integer.parseInt(operand)] != null) {
+                            JOptionPane.showMessageDialog(null, memory[Integer.parseInt(operand)]);
+
+                        } else {
+                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta mostrar la posicion " + operand + "que es nula");
+
+                        }
                         break;
                     case "20":
                         // "LOAD";toma una palabra de memoria y la colca en el acumulador 
@@ -152,8 +165,8 @@ public class Xtron_Cpu {
                             i = Integer.parseInt(operand) - 1;
 
                         } else {
-                  
-                           
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCH ");
+
                         }
                         break;
                     case "41":
@@ -162,14 +175,10 @@ public class Xtron_Cpu {
                             if (acumulator >= 0) {
                                 instructionCounter = Integer.parseInt(operand) - 1;
                                 i = Integer.parseInt(operand) - 1;
-                            } else {
-                                System.out.print("sali soy negativo");
-
                             }
-
                         } else {
 
-                            ///error de compilacion
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCHNEG ");
                         }
                         break;
                     case "42":
@@ -179,12 +188,9 @@ public class Xtron_Cpu {
                                 instructionCounter = Integer.parseInt(operand) - 1;
                                 i = Integer.parseInt(operand) - 1;
 
-                            } else {
-                                System.out.print("sali soy cero");
-
                             }
                         } else {
-
+                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCHZERO ");
                             ///error de compilacion
                         }
                         break;
@@ -195,6 +201,9 @@ public class Xtron_Cpu {
                     default:
 
                         break;
+                }
+                if (acumulator < -9999 || acumulator > 9999) {
+                    throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + "del programa desborda el acumulador y a provocado un error grave");
                 }
                 instructionCounter++;
             }
@@ -208,9 +217,12 @@ public class Xtron_Cpu {
 
     }
 
-    public String[] CPU_Debuger(String[] program, int instructionCounter, int totalInstruction) {
+    public String[] CPU_Debuger(String[] program, int positionIntruction, int totalIntruction) throws Xtron_Exeption {
+        boolean ciclo = false;
+        chargeMemory(program);
+        instructionCounter = positionIntruction;
 
-        for (int i = 0; i <= program.length - 1; i++) {
+        while (instructionCounter <= totalIntruction) {
 
             instructionRegister = memory[instructionCounter];
             operateCode = instructionRegister.substring(0, 2);
@@ -218,51 +230,80 @@ public class Xtron_Cpu {
 
             switch (operateCode) {
                 case "10"://Read lee una palabra desde el teclado y la guarda en una pocision espesifica
+                    String numero = "";
+                    boolean correcto = false;
+                    if (Integer.parseInt(operand) >= totalIntruction) {
+                        while (correcto = false) {
+                            numero = JOptionPane.showInputDialog("Ingrese su numero:");
+                            correcto = validaNumero(numero);
+                        }
+                        memory[Integer.parseInt(operand)] = numero + "";
+                        if (ciclo = false) {
+                            return memory;
+                        }
 
-                    break;
+                    } else {
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede guardar ningun numero en esa pocision");
+                    }
                 case "11":
                     //  "WRITE";toma una palabra de una ubicacion espesifica y la imprime en pantalla
-                    break;
+                    if (memory[Integer.parseInt(operand)] != null) {
+                        JOptionPane.showMessageDialog(null, memory[Integer.parseInt(operand)]);
+                        if (ciclo = false) {
+                            return memory;
+                        }
+
+                    } else {
+                        throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta mostrar la posicion " + operand + "que es nula");
+
+                    }
+
                 case "20":
                     // "LOAD";toma una palabra de memoria y la colca en el acumulador 
-                    if (Integer.parseInt(operand) >= program.length) {
+                    if (Integer.parseInt(operand) >= totalIntruction) {
 
                         if (memory[Integer.parseInt(operand)] != null) {
                             acumulator = Integer.parseInt(memory[Integer.parseInt(operand)]);
+                            if (ciclo = false) {
+                                return memory;
+                            }
                         } else {
-                            System.out.print("La poscicion: " + operand + " en memoria es nula ");
+                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta cargar la posicion " + operand + "que es nula");
 
                         }
 
                     } else {
-                        System.out.print("Error de compilacion intenta cargar una intruccion del programa en el acumulador");
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede cargar en el acumuador");
                     }
-
-                    break;
                 case "21":
                     // "STORE";almacena el acumulador en una pocision de memoria
-                    if (Integer.parseInt(operand) >= program.length) {
+                    if (Integer.parseInt(operand) >= totalIntruction) {
 
                         memory[Integer.parseInt(operand)] = acumulator + "";
+                        if (ciclo = false) {
+                            return memory;
+                        }
                     } else {
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede almacenar el acumulador en esa pocision");
 
                         ///error de compilacion
                     }
-                    break;
                 case "30":
                     //"ADD";suma una pocision de memoria al acumulador y mantiene la suma ahi
 
-                    if (Integer.parseInt(operand) >= program.length) {
+                    if (Integer.parseInt(operand) >= totalIntruction) {
                         if (memory[Integer.parseInt(operand)] != null) {
 
                             acumulator = acumulator + Integer.parseInt(memory[Integer.parseInt(operand)]);
+                            if (ciclo = false) {
+                                return memory;
+                            }
                         } else {
-                            System.out.print("Error de compilacion intenta sumar un valor null al acumulador");
+                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta sumar la posicion " + operand + "de memoria que es nula");
                         }
 
                     } else {
-
-                        ///error de compilacion
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede sumar al  acumulador");
                     }
                     break;
                 case "31":
@@ -271,84 +312,87 @@ public class Xtron_Cpu {
                     if (Integer.parseInt(operand) >= program.length) {
                         if (memory[Integer.parseInt(operand)] != null) {
                             acumulator = acumulator - Integer.parseInt(memory[Integer.parseInt(operand)]);
+                            if (ciclo = false) {
+                                return memory;
+                            }
                         } else {
-                            System.out.print("Error de compilacion intenta restar un valor null al acumulador");
+                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta restar la posicion " + operand + "de memoria que es nula");
                         }
 
                     } else {
-
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede restar al  acumulador");
                     }                            ///error de compilacion
 
                     break;
                 case "32":
                     // "DIBIDE";
-                    if (Integer.parseInt(operand) >= program.length) {
+                    if (Integer.parseInt(operand) >= totalIntruction) {
                         if (memory[Integer.parseInt(operand)] != null && Integer.parseInt(memory[Integer.parseInt(operand)]) != 0) {
                             acumulator = acumulator / Integer.parseInt(memory[Integer.parseInt(operand)]);
+                            if (ciclo = false) {
+                                return memory;
+                            }
                         } else {
-                            System.out.print("intenta dividir entre un null o entre cero");
+                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta dividir  la posicion " + operand + "de memoria que es nula o es cero");
                         }
                     } else {
-
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede dividir  al  acumulador");
                         ///error de compilacion
                     }
                     break;
                 case "33":
                     //"MULTIPLY";
-                    if (Integer.parseInt(operand) >= program.length) {
+                    if (Integer.parseInt(operand) >= totalIntruction) {
                         if (memory[Integer.parseInt(operand)] != null) {
                             acumulator = acumulator * Integer.parseInt(memory[Integer.parseInt(operand)]);
+                            if (ciclo = false) {
+                                return memory;
+                            }
                         } else {
+                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta multiplicar   la posicion " + operand + "de memoria que es nula ");
 
-                            System.out.print("intenta multiplicar por un valor nulo");
                         }
 
                     } else {
-
-                        ///error de compilacion
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede multiplicar al  acumulador");
                     }
                     break;
                 case "40":
                     // "BRANCH";
-                    if (Integer.parseInt(operand) < program.length) {
+                    if (Integer.parseInt(operand) <=totalIntruction) {
 
                         instructionCounter = Integer.parseInt(operand) - 1;
-                        i = Integer.parseInt(operand) - 1;
-
+                        ciclo=true;
                     } else {
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCH ");
 
-                        ///error de compilacion
                     }
                     break;
                 case "41":
                     // "BRANCHNEG";
-                    if (Integer.parseInt(operand) < program.length) {
+                    if (Integer.parseInt(operand) < totalIntruction) {
                         if (acumulator >= 0) {
                             instructionCounter = Integer.parseInt(operand) - 1;
-                            i = Integer.parseInt(operand) - 1;
-                        } else {
-                            System.out.print("sali soy negativo");
-                            return null;
+                            ciclo=true;
+                        }else{
+                          return memory;
                         }
-
                     } else {
 
-                        ///error de compilacion
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCHNEG ");
                     }
                     break;
                 case "42":
                     //"BRANCHZERO";
-                    if (Integer.parseInt(operand) < program.length) {
+                    if (Integer.parseInt(operand) < totalIntruction) {
                         if (acumulator != 0) {
                             instructionCounter = Integer.parseInt(operand) - 1;
-                            i = Integer.parseInt(operand) - 1;
-
-                        } else {
-                            System.out.print("sali soy cero");
-                            return null;
+                            ciclo=true;
+                        }else{
+                          return memory;
                         }
                     } else {
-
+                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCHZERO ");
                         ///error de compilacion
                     }
                     break;
@@ -360,6 +404,7 @@ public class Xtron_Cpu {
 
                     break;
             }
+            
             instructionCounter++;
         }
         return memory;
@@ -426,6 +471,11 @@ public class Xtron_Cpu {
 
     public void setAcumulator(int acumulator) {
         this.acumulator = acumulator;
+    }
+
+    private boolean validaNumero(String numero) {
+
+        return true;
     }
 
 }
