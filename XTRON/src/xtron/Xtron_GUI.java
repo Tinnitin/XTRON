@@ -58,6 +58,8 @@ public class Xtron_GUI extends javax.swing.JFrame {
         TXTAREA = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        TXFACUMULADOR = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TXATUTORIAL = new javax.swing.JTextArea();
@@ -115,6 +117,14 @@ public class Xtron_GUI extends javax.swing.JFrame {
             }
         });
 
+        TXFACUMULADOR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TXFACUMULADORActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("ACUMULADOR");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -124,16 +134,23 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btn_compile)
-                                .addComponent(btn_save)
-                                .addComponent(btn_run))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addGap(20, 20, 20)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btn_compile)
+                                        .addComponent(btn_save)
+                                        .addComponent(btn_run))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton3)
+                                        .addGap(20, 20, 20))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(TXFACUMULADOR, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -152,7 +169,11 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 .addComponent(btn_save)
                 .addGap(52, 52, 52)
                 .addComponent(jButton3)
-                .addGap(0, 181, Short.MAX_VALUE))
+                .addGap(90, 90, 90)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TXFACUMULADOR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 46, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -198,7 +219,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -274,13 +295,8 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_saveActionPerformed
 
-    private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_runActionPerformed
-
-    private void btn_compileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_compileActionPerformed
-        // TODO add your handling code here:
-        TXTAREA.setText(null);
+    private String[] compile(){
+          TXTAREA.setText(null);
         String comandos = txtComandos.getText();
         String lineas[] = comandos.split("\n");
         String separar = "";
@@ -315,7 +331,37 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 }
 
             }
+            
         }
+        
+        return lineas;
+    }
+    private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
+        Xtron_Cpu correr = new Xtron_Cpu();
+        String[] vec= compile();
+        String mem="";
+        String[] vecMemory= new String[99];
+        try {
+            vecMemory=correr.CPU_Run(vec);
+            TXFACUMULADOR.setText(correr.getAcumulator()+"");
+            
+            
+            // TODO add your handling code here:
+        } catch (Xtron_Exeption ex) {
+                TXTAREA.append(ex.getMessage()+"\n");
+                TXTAREA.setLineWrap(true);
+        }
+         
+        for (int i = 0; i <vecMemory.length-1 ; i++) {
+            mem+=""+vecMemory[i]+"\n";
+            
+             }
+        JOptionPane.showMessageDialog(null, mem);
+    }//GEN-LAST:event_btn_runActionPerformed
+
+    private void btn_compileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_compileActionPerformed
+        // TODO add your handling code here:
+      compile();
     }//GEN-LAST:event_btn_compileActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -341,6 +387,10 @@ linea = reader.readLine();
 } catch (Exception ex) {
 }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void TXFACUMULADORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXFACUMULADORActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXFACUMULADORActionPerformed
 
  
 
@@ -384,6 +434,7 @@ linea = reader.readLine();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea TXATUTORIAL;
+    private javax.swing.JTextField TXFACUMULADOR;
     private javax.swing.JTextArea TXTAREA;
     private javax.swing.JButton btn_compile;
     private javax.swing.JButton btn_run;
@@ -392,6 +443,7 @@ linea = reader.readLine();
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
