@@ -27,6 +27,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
      */
     public boolean compila;
     int name;
+    boolean caso;
 
     public Xtron_GUI() {
         this.setResizable(false);
@@ -36,6 +37,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         name = 0;
+
     }
 
     /**
@@ -296,19 +298,15 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_saveActionPerformed
 
-    private String[] compile() {
+    private String[] compile() throws Xtron_Exeption {
         TXTAREA.setText(null);
         String comandos = txtComandos.getText();
         String lineas[] = comandos.split("\n");
         String separar = "";
         String act = "";
-        boolean caso = true;
         int line = 0;
-        String[] vecMemory = new String[100];
-        for (int i = 0; i < lineas.length; i++) {
-            vecMemory[i] = lineas[i];
-        }
-          Xtron_Cpu xtron = new Xtron_Cpu();
+
+        Xtron_Cpu xtron = new Xtron_Cpu();
 
         for (int i = 0; i < lineas.length; i++) {
             separar = lineas[i];
@@ -321,6 +319,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 TXTAREA.setLineWrap(true);
                 compila = false;
                 caso = false;
+                throw new Xtron_Exeption("error en la linea " + line + " por tamaño");
 
             } else {
                 if (charArray.length != 4) {
@@ -330,6 +329,8 @@ public class Xtron_GUI extends javax.swing.JFrame {
                     TXTAREA.setLineWrap(true);
                     compila = false;
                     caso = false;
+                    throw new Xtron_Exeption("error en la linea " + line + " por tamaño");
+
                 } else {
 
                     line = i + 1;
@@ -337,30 +338,21 @@ public class Xtron_GUI extends javax.swing.JFrame {
 //                    TXTAREA.append("LA COMPILACION EN LA LINEA  " + line + " SE REALIZO CON EXITO\n");
 //                    TXTAREA.setLineWrap(true);
                     caso = true;
-                }
-              
-                try {
-                    vecMemory = xtron.CPU_Debuger(vecMemory, i,lineas.length);
-                    convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
-                    TXFACUMULADOR.setText(xtron.getAcumulator()+"");
-                    if(xtron.getCiclo()==true || xtron.getTerminateProgram()==true){
-                        break;
-                    }
 
-                } catch (Xtron_Exeption ex) {
-                    TXTAREA.append(ex.getMessage()+"\n");
-                    TXTAREA.setLineWrap(true);
                 }
-
             }
-
         }
 
         return lineas;
     }
     private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
         Xtron_Cpu correr = new Xtron_Cpu();
-        String[] vec = compile();
+        String[] vec = new String[100];
+        try {
+            vec = compile();
+        } catch (Xtron_Exeption ex) {
+            Logger.getLogger(Xtron_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String mem = "";
         String[] vecMemory = new String[100];
         try {
@@ -374,14 +366,14 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         }
 
-        for (int i = 0; i < vecMemory.length - 1; i++) {
-            mem += "" + vecMemory[i] + "\n";
-
-        }
-        JOptionPane.showMessageDialog(null, vecMemory.length);
-      //  convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
+//        for (int i = 0; i < vecMemory.length - 1; i++) {
+//            mem += "" + vecMemory[i] + "\n";
+//
+//        }
+//        JOptionPane.showMessageDialog(null, vecMemory.length);
+        //  convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
 //        convertirMatriz(vecMemory,10);
-        JOptionPane.showMessageDialog(null, mem);
+//        JOptionPane.showMessageDialog(null, mem);
     }//GEN-LAST:event_btn_runActionPerformed
 
     private void convertirMatriz(String[] vec, int n) {
@@ -411,9 +403,38 @@ public class Xtron_GUI extends javax.swing.JFrame {
     }
     private void btn_compileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_compileActionPerformed
         // TODO add your handling code here:
+//        if (caso == true) {
 
-        compile();
+        Xtron_Cpu xtron = new Xtron_Cpu();
+        String[] vecMemory = new String[100];
+        String lineas[] = new String[100];
+        try {
+            lineas = compile();
+            for (int i = 0; i < lineas.length; i++) {
+            vecMemory[i] = lineas[i];
+        }
+        for (int i = 0; i < lineas.length; i++) {
 
+            try {
+                vecMemory = xtron.CPU_Debuger(vecMemory, i, lineas.length);
+                convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
+                TXFACUMULADOR.setText(xtron.getAcumulator() + "");
+                if (xtron.getCiclo() == true || xtron.getTerminateProgram() == true) {
+                    break;
+                }
+
+            } catch (Xtron_Exeption ex) {
+                TXTAREA.append(ex.getMessage() + "\n");
+                TXTAREA.setLineWrap(true);
+            }
+
+        }
+        } catch (Xtron_Exeption ex) {
+         TXTAREA.append(ex.getMessage()+"\n");
+       }
+        
+        
+//        }
     }//GEN-LAST:event_btn_compileActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
