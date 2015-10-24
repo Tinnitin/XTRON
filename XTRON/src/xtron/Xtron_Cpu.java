@@ -189,7 +189,7 @@ public class Xtron_Cpu {
                     case "42":
                         //"BRANCHZERO";
                         if (Integer.parseInt(operand) < program.length) {
-                            if (acumulator != 0) {
+                            if (acumulator == 0) {
                                 instructionCounter = Integer.parseInt(operand) - 1;
                                 i = Integer.parseInt(operand) - 1;
 
