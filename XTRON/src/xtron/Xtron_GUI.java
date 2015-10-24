@@ -308,6 +308,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
         for (int i = 0; i < lineas.length; i++) {
             vecMemory[i] = lineas[i];
         }
+          Xtron_Cpu xtron = new Xtron_Cpu();
 
         for (int i = 0; i < lineas.length; i++) {
             separar = lineas[i];
@@ -337,10 +338,14 @@ public class Xtron_GUI extends javax.swing.JFrame {
 //                    TXTAREA.setLineWrap(true);
                     caso = true;
                 }
-                Xtron_Cpu xtron = new Xtron_Cpu();
+              
                 try {
-                    vecMemory = xtron.CPU_Debuger(vecMemory, i);
+                    vecMemory = xtron.CPU_Debuger(vecMemory, i,lineas.length);
                     convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
+                    TXFACUMULADOR.setText(xtron.getAcumulator()+"");
+                    if(xtron.getCiclo()==true || xtron.getTerminateProgram()==true){
+                        break;
+                    }
 
                 } catch (Xtron_Exeption ex) {
                     TXTAREA.append(ex.getMessage()+"\n");
@@ -374,7 +379,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         }
         JOptionPane.showMessageDialog(null, vecMemory.length);
-        convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
+      //  convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
 //        convertirMatriz(vecMemory,10);
         JOptionPane.showMessageDialog(null, mem);
     }//GEN-LAST:event_btn_runActionPerformed
