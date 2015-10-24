@@ -30,7 +30,7 @@ public class Xtron_Cpu {
     }
      
     public Xtron_Cpu() {
-        this.memory = new String[99];
+        this.memory = new String[100];
         this.acumulator = 0;
         this.instructionCounter = 0;
         this.instructionRegister = "0000";
@@ -227,12 +227,12 @@ public class Xtron_Cpu {
 
     }
 
-    public String[] CPU_Debuger(String[] program, int positionIntruction, int totalIntruction) throws Xtron_Exeption {
+    public String[] CPU_Debuger(String[] program, int positionIntruction) throws Xtron_Exeption {
         ciclo=false;
         chargeMemory(program);
         instructionCounter = positionIntruction;
 
-        while (instructionCounter <= totalIntruction) {
+        while (instructionCounter <= program.length) {
 
             instructionRegister = memory[instructionCounter];
             operateCode = instructionRegister.substring(0, 2);
@@ -243,7 +243,7 @@ public class Xtron_Cpu {
                     String numero = "";
                     boolean correcto;
                     correcto = false;
-                    if (Integer.parseInt(operand) >= totalIntruction) {
+                    if (Integer.parseInt(operand) >= program.length) {
                         while (correcto == false) {
 
                             numero = JOptionPane.showInputDialog("Ingrese su numero: ");
@@ -272,7 +272,7 @@ public class Xtron_Cpu {
 
                 case "20":
                     // "LOAD";toma una palabra de memoria y la colca en el acumulador 
-                    if (Integer.parseInt(operand) >= totalIntruction) {
+                    if (Integer.parseInt(operand) >= program.length) {
 
                         if (memory[Integer.parseInt(operand)] != null) {
                             acumulator = Integer.parseInt(memory[Integer.parseInt(operand)]);
@@ -289,7 +289,7 @@ public class Xtron_Cpu {
                     }
                 case "21":
                     // "STORE";almacena el acumulador en una pocision de memoria
-                    if (Integer.parseInt(operand) >= totalIntruction) {
+                    if (Integer.parseInt(operand) >= program.length) {
 
                         memory[Integer.parseInt(operand)] = acumulator + "";
                         if (ciclo == false) {
@@ -303,7 +303,7 @@ public class Xtron_Cpu {
                 case "30":
                     //"ADD";suma una pocision de memoria al acumulador y mantiene la suma ahi
 
-                    if (Integer.parseInt(operand) >= totalIntruction) {
+                    if (Integer.parseInt(operand) >= program.length) {
                         if (memory[Integer.parseInt(operand)] != null) {
 
                             acumulator = acumulator + Integer.parseInt(memory[Integer.parseInt(operand)]);
@@ -338,7 +338,7 @@ public class Xtron_Cpu {
                     break;
                 case "32":
                     // "DIBIDE";
-                    if (Integer.parseInt(operand) >= totalIntruction) {
+                    if (Integer.parseInt(operand) >= program.length) {
                         if (memory[Integer.parseInt(operand)] != null && Integer.parseInt(memory[Integer.parseInt(operand)]) != 0) {
                             acumulator = acumulator / Integer.parseInt(memory[Integer.parseInt(operand)]);
                             if (ciclo == false) {
@@ -354,7 +354,7 @@ public class Xtron_Cpu {
                     break;
                 case "33":
                     //"MULTIPLY";
-                    if (Integer.parseInt(operand) >= totalIntruction) {
+                    if (Integer.parseInt(operand) >= program.length) {
                         if (memory[Integer.parseInt(operand)] != null) {
                             acumulator = acumulator * Integer.parseInt(memory[Integer.parseInt(operand)]);
                             if (ciclo == false) {
@@ -372,7 +372,7 @@ public class Xtron_Cpu {
                 case "40":
                     // "BRANCH";
                       
-                    if (Integer.parseInt(operand) <= totalIntruction) {
+                    if (Integer.parseInt(operand) <= program.length) {
 
                         instructionCounter = Integer.parseInt(operand) - 1;
                         ciclo = true;
@@ -384,7 +384,7 @@ public class Xtron_Cpu {
                 case "41":
                     // "BRANCHNEG";
                       
-                    if (Integer.parseInt(operand) <= totalIntruction) {
+                    if (Integer.parseInt(operand) <= program.length) {
                         if (acumulator < 0) {
                             instructionCounter = Integer.parseInt(operand) - 1;
                             ciclo = true;
@@ -398,7 +398,7 @@ public class Xtron_Cpu {
                 case "42":
                     //"BRANCHZERO";  
                   
-                    if (Integer.parseInt(operand) <= totalIntruction) {
+                    if (Integer.parseInt(operand) <= program.length) {
                         if (acumulator == 0) {
                             instructionCounter = Integer.parseInt(operand) - 1;
                             ciclo = true;

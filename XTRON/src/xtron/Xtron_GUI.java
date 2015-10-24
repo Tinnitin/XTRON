@@ -5,6 +5,7 @@
  */
 package xtron;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -79,7 +80,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btn_compile.setText("COMPILE");
+        btn_compile.setText("DEBUG");
         btn_compile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_compileActionPerformed(evt);
@@ -264,11 +265,11 @@ public class Xtron_GUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         this.TXATUTORIAL.setText("ESTE ES UN TUTORIAL CON LAS OPERACIONES BASICAS QUE REALIZA LA MAQUINA XTRON\n\n\n"
-            + "CODIGO DE OPERACION                             SIGNIFICADO\n\n"
-            + "READ  10                                         "
-            + "                     Lee una palabra desde el teclado y la introduce"
-            + "en una ubicacion especifica de memoria\n\n"
-            + "WRITE 11 ");
+                + "CODIGO DE OPERACION                             SIGNIFICADO\n\n"
+                + "READ  10                                         "
+                + "                     Lee una palabra desde el teclado y la introduce"
+                + "en una ubicacion especifica de memoria\n\n"
+                + "WRITE 11 ");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
@@ -281,28 +282,32 @@ public class Xtron_GUI extends javax.swing.JFrame {
         }
         Xtron_IO saves = new Xtron_IO();
         try {
-            if(save!=""){
-            saves.guardarArchivo("file" + name + ".txt", save);
-            name++;
-            JOptionPane.showMessageDialog(null,"SE HA GUARDADO CON EXITO");
-            }else{
-                JOptionPane.showMessageDialog(null,"NO HAY COMANDOS PARA GUARDAR");
+            if (save != "") {
+                saves.guardarArchivo("file" + name + ".txt", save);
+                name++;
+                JOptionPane.showMessageDialog(null, "SE HA GUARDADO CON EXITO");
+            } else {
+                JOptionPane.showMessageDialog(null, "NO HAY COMANDOS PARA GUARDAR");
             }
-            
+
         } catch (IOException ex) {
             Logger.getLogger(Xtron_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btn_saveActionPerformed
 
-    private String[] compile(){
-          TXTAREA.setText(null);
+    private String[] compile() {
+        TXTAREA.setText(null);
         String comandos = txtComandos.getText();
         String lineas[] = comandos.split("\n");
         String separar = "";
         String act = "";
         boolean caso = true;
         int line = 0;
+        String[] vecMemory = new String[100];
+        for (int i = 0; i < lineas.length; i++) {
+            vecMemory[i] = lineas[i];
+        }
 
         for (int i = 0; i < lineas.length; i++) {
             separar = lineas[i];
@@ -314,6 +319,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 TXTAREA.append("ERROR. El comando en la linea " + line + " solo debe tener numeros\n");
                 TXTAREA.setLineWrap(true);
                 compila = false;
+                caso = false;
 
             } else {
                 if (charArray.length != 4) {
@@ -322,46 +328,87 @@ public class Xtron_GUI extends javax.swing.JFrame {
                     TXTAREA.append("ERROR. LA DIMENSION DEL COMANDO EN LA LINEA " + line + " ES INCORRECTA\n");
                     TXTAREA.setLineWrap(true);
                     compila = false;
+                    caso = false;
                 } else {
 
                     line = i + 1;
                     // JOptionPane.showMessageDialog(null,"LA COMPILACION EN LA LINEA  "+line+" SE REALIZO CON EXITO");
-                    TXTAREA.append("LA COMPILACION EN LA LINEA  " + line + " SE REALIZO CON EXITO\n");
+//                    TXTAREA.append("LA COMPILACION EN LA LINEA  " + line + " SE REALIZO CON EXITO\n");
+//                    TXTAREA.setLineWrap(true);
+                    caso = true;
+                }
+                Xtron_Cpu xtron = new Xtron_Cpu();
+                try {
+                    vecMemory = xtron.CPU_Debuger(vecMemory, i);
+                    convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
+
+                } catch (Xtron_Exeption ex) {
+                    TXTAREA.append(ex.getMessage()+"\n");
                     TXTAREA.setLineWrap(true);
                 }
 
             }
-            
+
         }
-        
+
         return lineas;
     }
     private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
         Xtron_Cpu correr = new Xtron_Cpu();
-        String[] vec= compile();
-        String mem="";
-        String[] vecMemory= new String[99];
+        String[] vec = compile();
+        String mem = "";
+        String[] vecMemory = new String[100];
         try {
-            vecMemory=correr.CPU_Run(vec);
-            TXFACUMULADOR.setText(correr.getAcumulator()+"");
-            
-            
+            vecMemory = correr.CPU_Run(vec);
+            TXFACUMULADOR.setText(correr.getAcumulator() + "");
+
             // TODO add your handling code here:
         } catch (Xtron_Exeption ex) {
-                TXTAREA.append(ex.getMessage()+"\n");
-                TXTAREA.setLineWrap(true);
+            TXTAREA.append(ex.getMessage() + "\n");
+            TXTAREA.setLineWrap(true);
+
         }
-         
-        for (int i = 0; i <vecMemory.length-1 ; i++) {
-            mem+=""+vecMemory[i]+"\n";
-            
-             }
+
+        for (int i = 0; i < vecMemory.length - 1; i++) {
+            mem += "" + vecMemory[i] + "\n";
+
+        }
+        JOptionPane.showMessageDialog(null, vecMemory.length);
+        convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
+//        convertirMatriz(vecMemory,10);
         JOptionPane.showMessageDialog(null, mem);
     }//GEN-LAST:event_btn_runActionPerformed
 
+    private void convertirMatriz(String[] vec, int n) {
+        int cont = 0;
+        String mat = "";
+        String[][] matriz = new String[n][n];
+        for (int x = 0; x < n; x++) {
+            for (int y = 0; y < n; y++) {
+                matriz[y][x] = vec[cont];
+
+                cont++;
+
+            }
+        }
+        for (int x = 0; x < n; x++) {
+            mat += "\n";
+            for (int y = 0; y < n; y++) {
+                if (matriz[y][x] == null) {
+                    mat += "+0000" + "     ";
+                } else {
+                    mat += "+" + matriz[y][x] + "     ";
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, mat);
+
+    }
     private void btn_compileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_compileActionPerformed
         // TODO add your handling code here:
-      compile();
+
+        compile();
+
     }//GEN-LAST:event_btn_compileActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -373,33 +420,30 @@ public class Xtron_GUI extends javax.swing.JFrame {
         txtComandos.setText(null);
         TXTAREA.setText(null);
         JFileChooser chooser = new JFileChooser();
-chooser.setApproveButtonText("Abrir TxT");
-chooser.addChoosableFileFilter(new TxTFilter());
-chooser.showOpenDialog(null);
-File archivo=chooser.getSelectedFile();
-try {
-BufferedReader reader = new BufferedReader(new FileReader(archivo));
-String linea = reader.readLine();
-while (linea != null) {
-txtComandos.append(linea + "\n");
-linea = reader.readLine();
-}
-} catch (Exception ex) {
-}
+        chooser.setApproveButtonText("Abrir TxT");
+        chooser.addChoosableFileFilter(new TxTFilter());
+        chooser.showOpenDialog(null);
+        File archivo = chooser.getSelectedFile();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(archivo));
+            String linea = reader.readLine();
+            while (linea != null) {
+                txtComandos.append(linea + "\n");
+                linea = reader.readLine();
+            }
+        } catch (Exception ex) {
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void TXFACUMULADORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXFACUMULADORActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TXFACUMULADORActionPerformed
 
- 
-
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -426,7 +470,7 @@ linea = reader.readLine();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-              
+
                 new Xtron_GUI().setVisible(true);
             }
         });
