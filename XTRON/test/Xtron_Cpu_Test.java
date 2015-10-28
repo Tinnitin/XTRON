@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import xtron.Xtron_Cpu;
+import xtron.Xtron_Memory;
 import xtron.Xtron_Exeption;
 import xtron.Xtron_IO;
 
@@ -44,11 +44,15 @@ public class Xtron_Cpu_Test {
         program= io.leerTextoArchivo("debug.txt");
         
         
-         Xtron_Cpu cpu=new Xtron_Cpu();
+         Xtron_Memory cpu=new Xtron_Memory();
         
          for (int i = 0; i < program.length-1; i++) {
              try {
+<<<<<<< HEAD
                  program=cpu.CPU_Debuger(program, i,7);
+=======
+                 program=cpu.CPU_Debuger(program, i,8);
+>>>>>>> 224112ee734a3b0246dfd54c3f3c42fa9a3137da
                  System.out.print(cpu.getAcumulator());
                  
 //                 for (String re : program) {
