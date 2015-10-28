@@ -48,7 +48,7 @@ public class Xtron_Cpu_Test {
         
          for (int i = 0; i < program.length-1; i++) {
              try {
-                 program=cpu.CPU_Debuger(program, i);
+                 program=cpu.CPU_Debuger(program, i,7);
                  System.out.print(cpu.getAcumulator());
                  
 //                 for (String re : program) {
