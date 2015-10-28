@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author Juegos
  */
-public class Xtron_GUI extends javax.swing.JFrame {
+public class Xtron_CPU extends javax.swing.JFrame {
 
     /**
      * Creates new form Xtron_GUI
@@ -29,7 +30,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
     int name;
     boolean caso;
 
-    public Xtron_GUI() {
+    public Xtron_CPU() {
         this.setResizable(false);
 
         initComponents();
@@ -37,6 +38,31 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         name = 0;
+
+        txaMatriz.setBackground(Color.black);
+        txaMatriz.setForeground(Color.GREEN);
+        txaMatriz.setEditable(false);
+        txaAtrib.setBackground(Color.black);
+        txaAtrib.setForeground(Color.GREEN);
+        txaAtrib.setEditable(false);
+        ImageIcon run = new ImageIcon("run.jpg");
+        ImageIcon open = new ImageIcon("open.jpg");
+        ImageIcon save = new ImageIcon("save.jpg");
+        ImageIcon debug = new ImageIcon("debug.jpg");
+        ImageIcon logo = new ImageIcon("logo.jpg");
+
+        btn_compile.setIcon(debug);
+        btn_run.setIcon(run);
+        btn_save.setIcon(save);
+        btn_open.setIcon(open);
+        xtronlabel.setIcon(logo);
+        TXTAREA.setBackground(Color.gray);
+        TXTAREA.setForeground(Color.red);
+        txaAtrib.setEditable(false);
+        txaMatriz.setEditable(false);
+        TXTAREA.setEditable(false);
+        TXATUTORIAL.setEditable(false);
+        JOptionPane.showMessageDialog(null, "*** Welcome to Xtron! ***\n*** Please enter your program one instruction ***\n *** (or data word) at a time. I will type the ***\n*** location number and a question mark (?). ***\n*** You then type the word for that location. ***\n*** Type the sentinel -99999 to stop entering ***\n*** your program. ***");
 
     }
 
@@ -60,9 +86,13 @@ public class Xtron_GUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TXTAREA = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        TXFACUMULADOR = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        btn_open = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txaMatriz = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txaAtrib = new javax.swing.JTextArea();
+        xtronlabel = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TXATUTORIAL = new javax.swing.JTextArea();
@@ -113,79 +143,96 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
         jLabel1.setText("COMPILE STATE");
 
-        jButton3.setText("LOAD");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_open.setText("OPEN");
+        btn_open.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_openActionPerformed(evt);
             }
         });
 
-        TXFACUMULADOR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TXFACUMULADORActionPerformed(evt);
-            }
-        });
+        txaMatriz.setColumns(20);
+        txaMatriz.setRows(5);
+        jScrollPane4.setViewportView(txaMatriz);
 
-        jLabel2.setText("ACUMULADOR");
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel3.setText("Memory Status");
+
+        txaAtrib.setColumns(20);
+        txaAtrib.setRows(5);
+        jScrollPane5.setViewportView(txaAtrib);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btn_compile)
-                                        .addComponent(btn_save)
-                                        .addComponent(btn_run))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButton3)
-                                        .addGap(20, 20, 20))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(TXFACUMULADOR, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(xtronlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(btn_compile)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btn_run))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(btn_open)
+                                                .addGap(56, 56, 56)
+                                                .addComponent(btn_save)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 23, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(237, 237, 237)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(513, 513, 513)
                         .addComponent(jLabel1)
-                        .addGap(70, 70, 70))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(btn_compile)
-                .addGap(35, 35, 35)
-                .addComponent(btn_run)
-                .addGap(48, 48, 48)
-                .addComponent(btn_save)
-                .addGap(52, 52, 52)
-                .addComponent(jButton3)
-                .addGap(90, 90, 90)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TXFACUMULADOR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 46, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(xtronlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(59, 59, 59)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btn_open)
+                                    .addComponent(btn_save))
+                                .addGap(54, 54, 54)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btn_compile)
+                                    .addComponent(btn_run))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -195,14 +242,14 @@ public class Xtron_GUI extends javax.swing.JFrame {
         TXATUTORIAL.setRows(5);
         jScrollPane3.setViewportView(TXATUTORIAL);
 
-        jButton1.setText("VER TUTORIAL");
+        jButton1.setText("TUTORIAL");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("CREDITOS");
+        jButton2.setText("CREDITS");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -222,7 +269,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1228, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -237,7 +284,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 21, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("TUTORIAL", jPanel4);
@@ -247,13 +294,14 @@ public class Xtron_GUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addGap(38, 38, 38))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,17 +309,45 @@ public class Xtron_GUI extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        this.TXATUTORIAL.setText("CREDITOS\nIgnacio Monge Valverde  B34396 \nAgustin Camacho Mora B2302");
+        this.TXATUTORIAL.setText("CREDITS\nIgnacio Monge Valverde  B34396 \nAgustin Camacho Mora B2302\n"
+                + "Universidad de Costa Rica\n"
+                + "COURSE: Computer Architecture\nYEAR: 2015");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        this.TXATUTORIAL.setText("ESTE ES UN TUTORIAL CON LAS OPERACIONES BASICAS QUE REALIZA LA MAQUINA XTRON\n\n\n"
-                + "CODIGO DE OPERACION                             SIGNIFICADO\n\n"
+        this.TXATUTORIAL.setText("This is a tutorial with the basic operations XTRON PERFORMING MACHINE\n\n\n"
+                + "OPERATION CODE                             MEANING\n\n"
                 + "READ  10                                         "
-                + "                     Lee una palabra desde el teclado y la introduce"
-                + "en una ubicacion especifica de memoria\n\n"
-                + "WRITE 11 ");
+                + "         Read a word from the keyboard and enter"
+                + "in a specific memory location.\n\n"
+                + "WRITE 11                                         "
+                + "        Write a word from a specific location in memory and printed on the screen.\n\n"
+                + "LOAD 20                                          "
+                + "         Load a word from a specific location in memory and placed in the accumulator.\n\n"
+                + "STORE 21                                         "
+                + "        Accumulator stores a word within a specific memory location.\n\n"
+                + "ADD 30                                           "
+                + "             Adds a word of a specific memory location of the word in the accumulator"
+                + " ( leave result in accumulator ).\n\n"
+                + "SUBSTRACT 31                                     "
+                + "      Adds a word of a specific memory location of the word in the accumulator "
+                + "( leave result in accumulator ).\n\n "
+                + "DIVIDE 32                                        "
+                + "         Divide a word from a specific location in memory to the word in the accumulator "
+                + "( leave result in accumulator ) .\n\n"
+                + "MULTIPLY 33                                      "
+                + "       Multiply a word from a specific location in memory to the word in the accumulator "
+                + "( leave result in accumulator ).\n\n "
+                + "BRANCH 40                                        "
+                + "       Branches to a specific memory location.\n\n"
+                + "BRANCHNEG 41                                     "
+                + "     Branches to a specific location in memory if the accumulator is negative.\n\n"
+                + ""
+                + "BRANCHZERO 42                                    "
+                + "     Branches to a specific location in memory if the accumulator is zero.\n\n"
+                + "HALT 43                                          "
+                + "            Stop. The program completed its task.");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
@@ -287,13 +363,13 @@ public class Xtron_GUI extends javax.swing.JFrame {
             if (save != "") {
                 saves.guardarArchivo("file" + name + ".txt", save);
                 name++;
-                JOptionPane.showMessageDialog(null, "SE HA GUARDADO CON EXITO");
+                JOptionPane.showMessageDialog(null, "SAVE SUCCESSFULLY");
             } else {
-                JOptionPane.showMessageDialog(null, "NO HAY COMANDOS PARA GUARDAR");
+                JOptionPane.showMessageDialog(null, "DONT HAVE LINES FOR SAVE");
             }
 
         } catch (IOException ex) {
-            Logger.getLogger(Xtron_GUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Xtron_CPU.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btn_saveActionPerformed
@@ -306,7 +382,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
         String act = "";
         int line = 0;
 
-        Xtron_Cpu xtron = new Xtron_Cpu();
+        Xtron_Memory xtron = new Xtron_Memory();
 
         for (int i = 0; i < lineas.length; i++) {
             separar = lineas[i];
@@ -315,21 +391,21 @@ public class Xtron_GUI extends javax.swing.JFrame {
             act = lineas[i];
             if (act.matches("[0-9]+") == false) {
                 line = i + 1;
-                TXTAREA.append("ERROR. El comando en la linea " + line + " solo debe tener numeros\n");
+                TXTAREA.append("ERROR. The line " + line + " only  should have numbers\n");
                 TXTAREA.setLineWrap(true);
                 compila = false;
                 caso = false;
-                throw new Xtron_Exeption("error en la linea " + line + " por tamaño");
+                throw new Xtron_Exeption("Error in the line  " + line + " bi size");
 
             } else {
                 if (charArray.length != 4) {
                     line = i + 1;
 
-                    TXTAREA.append("ERROR. LA DIMENSION DEL COMANDO EN LA LINEA " + line + " ES INCORRECTA\n");
+                    TXTAREA.append("ERROR. The size of the line  " + line + " is incorrect\n");
                     TXTAREA.setLineWrap(true);
                     compila = false;
                     caso = false;
-                    throw new Xtron_Exeption("error en la linea " + line + " por tamaño");
+                  //  throw new Xtron_Exeption("error en la linea " + line + " por tamaño");
 
                 } else {
 
@@ -346,39 +422,60 @@ public class Xtron_GUI extends javax.swing.JFrame {
         return lineas;
     }
     private void btn_runActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_runActionPerformed
-        Xtron_Cpu correr = new Xtron_Cpu();
+
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
+        Xtron_Memory xtron = new Xtron_Memory();
         String[] vec = new String[100];
-        try {
-            vec = compile();
-        } catch (Xtron_Exeption ex) {
-            Logger.getLogger(Xtron_GUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
         String mem = "";
         String[] vecMemory = new String[100];
-        try {
-            vecMemory = correr.CPU_Run(vec);
-            TXFACUMULADOR.setText(correr.getAcumulator() + "");
+        int moment = 0;
 
-            // TODO add your handling code here:
+        try {
+            vec = compile();
+            vecMemory = xtron.CPU_Run(vec);
+            convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
+
+            moment = xtron.getAcumulator();
+            if (moment >= 0) {
+                txaAtrib.setText("acumulator:                " + "+" + xtron.getAcumulator() + "\n");
+                txaAtrib.setLineWrap(true);
+            } else {
+                txaAtrib.setText("acumulator:                " + xtron.getAcumulator() + "\n");
+                txaAtrib.setLineWrap(true);
+            }
+
+            txaAtrib.append("instructionRegister:  " + "+" + xtron.getInstructionRegister() + "\n");
+            txaAtrib.setLineWrap(true);
+            txaAtrib.append("operationCode:          " + xtron.getOperateCode() + "\n");
+            txaAtrib.setLineWrap(true);
+            txaAtrib.append("operand:                      " + xtron.getOperand() + "\n");
+            txaAtrib.setLineWrap(true);
+            txaAtrib.append("counter:                        " + xtron.getInstructionCounter() + "\n");
+            txaAtrib.setLineWrap(true);
+            TXTAREA.setText("BUILD SUCCESSFUL");
+            time_end = System.currentTimeMillis();
+            txaAtrib.setLineWrap(true);
+
+            TXTAREA.append("   (TOTAL TIME: " + (time_end - time_start) / 1000 + " seconds)");
+
         } catch (Xtron_Exeption ex) {
             TXTAREA.append(ex.getMessage() + "\n");
             TXTAREA.setLineWrap(true);
-
-        }
-
-//        for (int i = 0; i < vecMemory.length - 1; i++) {
-//            mem += "" + vecMemory[i] + "\n";
-//
 //        }
-//        JOptionPane.showMessageDialog(null, vecMemory.length);
-        //  convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
-//        convertirMatriz(vecMemory,10);
-//        JOptionPane.showMessageDialog(null, mem);
+
+
     }//GEN-LAST:event_btn_runActionPerformed
+        time_end = System.currentTimeMillis();
+        txaAtrib.setLineWrap(true);
+
+    }
 
     private void convertirMatriz(String[] vec, int n) {
         int cont = 0;
+
         String mat = "";
+        String[] vec3 = new String[5];
         String[][] matriz = new String[n][n];
         for (int x = 0; x < n; x++) {
             for (int y = 0; y < n; y++) {
@@ -393,60 +490,171 @@ public class Xtron_GUI extends javax.swing.JFrame {
             for (int y = 0; y < n; y++) {
                 if (matriz[y][x] == null) {
                     mat += "+0000" + "     ";
+                } else if (Integer.parseInt(matriz[y][x]) >= 0) {
+                    String var = matriz[y][x];
+                    String campo = "";
+                    char[] charArray = var.toCharArray();
+
+                    String[] vec2 = new String[5];
+//                    if (charArray.length<5){
+                    for (int i = 0; i < charArray.length; i++) {
+                        vec2[i] = String.valueOf(charArray[i] + "");
+                    }
+
+                    if (vec2[1] == null) {
+                        vec3[0] = "+";
+                        vec3[1] = "0";
+                        vec3[2] = "0";
+                        vec3[3] = "0";
+                        vec3[4] = vec2[0];
+                    } else if (vec2[2] == null) {
+                        //JOptionPane.showMessageDialog(null, vec2[0]+"+++"+vec2[2]);
+
+                        vec3[0] = "+";
+                        vec3[1] = "0";
+                        vec3[2] = "0";
+                        vec3[3] = vec2[0];
+                        vec3[4] = vec2[1];
+                    } else if (vec2[3] == null) {
+                        vec3[0] = "+";
+                        vec3[1] = "0";
+                        vec3[2] = vec2[0];
+                        vec3[3] = vec2[1];
+                        vec3[4] = vec2[2];
+                    } else {
+                        vec3[0] = "+";
+                        vec3[1] = vec2[0];
+                        vec3[2] = vec2[1];
+                        vec3[3] = vec2[2];
+                        vec3[4] = vec2[3];
+                    }
+                    for (int i = 0; i < vec3.length; i++) {
+                        campo += vec3[i];
+
+                    }
+
+                    mat += campo + "     ";
+                    
                 } else {
-                    mat += "+" + matriz[y][x] + "     ";
+                    String var = matriz[y][x];
+                    String campo = "";
+                    char[] charArray = var.toCharArray();
+
+                    String[] vec2 = new String[5];
+                    for (int i = 0; i < charArray.length; i++) {
+                        vec2[i] = String.valueOf(charArray[i] + "");
+                    }
+
+                    if (vec2[2] == null) {
+                        vec3[0] = " -";
+                        vec3[1] = "0";
+                        vec3[2] = "0";
+                        vec3[3] = "0";
+                        vec3[4] = vec2[1];
+                    } else if (vec2[3] == null) {
+                        //JOptionPane.showMessageDialog(null, vec2[0]+"+++"+vec2[2]);
+
+                        vec3[0] = " -";
+                        vec3[1] = "0";
+                        vec3[2] = "0";
+                        vec3[3] = vec2[1];
+                        vec3[4] = vec2[2];
+                    } else if (vec2[4] == null) {
+                        vec3[0] = " -";
+                        vec3[1] = "0";
+                        vec3[2] = vec2[1];
+                        vec3[3] = vec2[2];
+                        vec3[4] = vec2[3];
+                    } else {
+                        vec3[0] = vec2[0];
+                        vec3[1] = vec2[1];
+                        vec3[2] = vec2[2];
+                        vec3[3] = vec2[3];
+                        vec3[4] = vec2[4];
+                    }
+                    for (int i = 0; i < vec3.length; i++) {
+                        campo += vec3[i];
+
+                    }
+
+                    mat += campo + "     ";
+
                 }
             }
         }
-        JOptionPane.showMessageDialog(null, mat);
-
+//        JOptionPane.showMessageDialog(null, mat);
+        txaMatriz.setText(mat);
     }
     private void btn_compileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_compileActionPerformed
         // TODO add your handling code here:
 //        if (caso == true) {
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
+        String mat = "";
+        int moment = 0;
 
-        Xtron_Cpu xtron = new Xtron_Cpu();
+        Xtron_Memory xtron = new Xtron_Memory();
         String[] vecMemory = new String[100];
         String lineas[] = new String[100];
         try {
             lineas = compile();
             for (int i = 0; i < lineas.length; i++) {
-            vecMemory[i] = lineas[i];
-        }
-        for (int i = 0; i < lineas.length; i++) {
+                vecMemory[i] = lineas[i];
+            }
+            for (int i = 0; i < lineas.length; i++) {
 
-            try {
                 vecMemory = xtron.CPU_Debuger(vecMemory, i, lineas.length);
                 convertirMatriz(vecMemory, (int) Math.sqrt(vecMemory.length));
-                TXFACUMULADOR.setText(xtron.getAcumulator() + "");
-                if (xtron.getCiclo() == true || xtron.getTerminateProgram() == true) {
+//                    TXFACUMULADOR.setText(xtron.getAcumulator() + "");
+                moment = xtron.getAcumulator();
+                if (moment < -9999 || moment > 9999) {
+                    throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (i + 1) + "program and the accumulator overflows caused a serious error");
+                }
+                if (moment >= 0) {
+                    txaAtrib.setText("acumulator:                " + "+" + xtron.getAcumulator() + "\n");
+                    txaAtrib.setLineWrap(true);
+                } else {
+                    txaAtrib.setText("acumulator:                " + xtron.getAcumulator() + "\n");
+                    txaAtrib.setLineWrap(true);
+                }
+
+                txaAtrib.append("instructionRegister:  " + "+" + xtron.getInstructionRegister() + "\n");
+                txaAtrib.setLineWrap(true);
+                txaAtrib.append("operationCode:          " + xtron.getOperateCode() + "\n");
+                txaAtrib.setLineWrap(true);
+                txaAtrib.append("operand:                      " + xtron.getOperand() + "\n");
+                txaAtrib.setLineWrap(true);
+                txaAtrib.append("counter:                        " + xtron.getInstructionCounter() + "\n");
+                txaAtrib.setLineWrap(true);
+
+                TXTAREA.setText("BUILD SUCCESSFUL");
+                time_end = System.currentTimeMillis();
+                txaAtrib.setLineWrap(true);
+
+                TXTAREA.append("   (TOTAL TIME: " + (time_end - time_start) / 1000 + " seconds)");
+                JOptionPane.showMessageDialog(null, "Line completed excellent\nPress ´aceptar´ for go to the next instruction");
+                if (xtron.getCiclo() == true) {
+                    break;
+                }
+                if (xtron.getTerminateProgram() == true) {
                     break;
                 }
 
-            } catch (Xtron_Exeption ex) {
-                TXTAREA.append(ex.getMessage() + "\n");
-                TXTAREA.setLineWrap(true);
             }
-
-        }
         } catch (Xtron_Exeption ex) {
-         TXTAREA.append(ex.getMessage()+"\n");
-       }
-        
-        
+            TXTAREA.append(ex.getMessage() + "\n");
+            TXTAREA.setLineWrap(true);
+        }
+
 //        }
     }//GEN-LAST:event_btn_compileActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        JFileChooser chooser = new JFileChooser();
-//chooser.setApproveButtonText("Abrir TxT");
-//chooser.addChoosableFileFilter(new TxTFilter());
-//chooser.showOpenDialog(null);
-//File archivo=chooser.getSelectedFile();
+    private void btn_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openActionPerformed
+
         txtComandos.setText(null);
         TXTAREA.setText(null);
         JFileChooser chooser = new JFileChooser();
-        chooser.setApproveButtonText("Abrir TxT");
+        chooser.setApproveButtonText("OPEN TxT");
         chooser.addChoosableFileFilter(new TxTFilter());
         chooser.showOpenDialog(null);
         File archivo = chooser.getSelectedFile();
@@ -459,11 +667,7 @@ public class Xtron_GUI extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void TXFACUMULADORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXFACUMULADORActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TXFACUMULADORActionPerformed
+    }//GEN-LAST:event_btn_openActionPerformed
 
     /**
      * @param args the command line arguments
@@ -483,44 +687,49 @@ public class Xtron_GUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Xtron_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Xtron_CPU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Xtron_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Xtron_CPU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Xtron_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Xtron_CPU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Xtron_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Xtron_CPU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                new Xtron_GUI().setVisible(true);
+                new Xtron_CPU().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea TXATUTORIAL;
-    private javax.swing.JTextField TXFACUMULADOR;
     private javax.swing.JTextArea TXTAREA;
     private javax.swing.JButton btn_compile;
+    private javax.swing.JButton btn_open;
     private javax.swing.JButton btn_run;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea txaAtrib;
+    private javax.swing.JTextArea txaMatriz;
     private javax.swing.JTextArea txtComandos;
+    private javax.swing.JLabel xtronlabel;
     // End of variables declaration//GEN-END:variables
 }

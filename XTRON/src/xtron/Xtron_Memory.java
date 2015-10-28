@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author Tin
  */
-public class Xtron_Cpu {
+public class Xtron_Memory {
 
     String[] memory;// contiene la memoria del Xtron 
     int instructionCounter;//pocision actual de la instruccion 
@@ -22,8 +22,7 @@ public class Xtron_Cpu {
     boolean ciclo;
     boolean terminateProgram;
 
-
-    public Xtron_Cpu() {
+    public Xtron_Memory() {
         this.memory = new String[100];
         this.acumulator = 0;
         this.instructionCounter = 0;
@@ -31,7 +30,7 @@ public class Xtron_Cpu {
         this.operateCode = "00";
         this.operand = "00";
         this.ciclo = false;
-        this.terminateProgram=false;
+        this.terminateProgram = false;
 
     }
 
@@ -53,13 +52,15 @@ public class Xtron_Cpu {
                         boolean correcto = false;
                         if (Integer.parseInt(operand) >= program.length) {
                             while (correcto == false) {
-                                numero = JOptionPane.showInputDialog("Ingrese su numero");
+                                numero = JOptionPane.showInputDialog("Enter a number");
                                 correcto = validaNumero(numero);
                             }
                             memory[Integer.parseInt(operand)] = numero + "";
 
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede guardar ningun numero en esa pocision");
+                            throw new Xtron_Exeption("*** Xtron execution abnormally terminated   ***\n"
+                                    + "Line:  " + (instructionCounter + 1) + "   It creates conflicts since the pocision " + operand + ""
+                                    + " Memory is a program instruction so you can not save any number in that pocision");
                         }
 
                         break;
@@ -69,7 +70,8 @@ public class Xtron_Cpu {
                             JOptionPane.showMessageDialog(null, memory[Integer.parseInt(operand)]);
 
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta mostrar la posicion " + operand + "que es nula");
+                            int var = instructionCounter + 1;
+                            throw new Xtron_Exeption("*** Xtron execution abnormally terminated   ***\\n\"line: " + (instructionCounter + 1) + " generates error since attempts to show the position " + operand + "  It is null");
 
                         }
                         break;
@@ -80,14 +82,13 @@ public class Xtron_Cpu {
                             if (memory[Integer.parseInt(operand)] != null) {
                                 acumulator = Integer.parseInt(memory[Integer.parseInt(operand)]);
                             } else {
-                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta cargar la posicion " + operand + "que es nula");
+                                throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to load the position" + operand + "  It is null");
 
                             }
 
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede cargar en el acumuador");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be loaded into the accumulator");
                         }
-
                         break;
                     case "21":
                         // "STORE";almacena el acumulador en una pocision de memoria
@@ -96,7 +97,7 @@ public class Xtron_Cpu {
                             memory[Integer.parseInt(operand)] = acumulator + "";
 
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede almacenar el acumulador en esa pocision");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is a program instruction so you can not store the accumulator value in that pocision");
 
                             ///error de compilacion
                         }
@@ -110,11 +111,11 @@ public class Xtron_Cpu {
                                 acumulator = acumulator + Integer.parseInt(memory[Integer.parseInt(operand)]);
 
                             } else {
-                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta sumar la posicion " + operand + "de memoria que es nula");
+                                throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to add the position " + operand + " It is null");
                             }
 
-                        } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede sumar al  acumulador");
+                        } else { 
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be add into the accumulator");
                         }
                         break;
                     case "31":
@@ -125,11 +126,11 @@ public class Xtron_Cpu {
                                 acumulator = acumulator - Integer.parseInt(memory[Integer.parseInt(operand)]);
 
                             } else {
-                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta restar la posicion " + operand + "de memoria que es nula");
+                                throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to subtract the position " + operand + " It is null");
                             }
 
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede restar al  acumulador");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be subtract into the accumulator");
                         }                            ///error de compilacion
 
                         break;
@@ -140,10 +141,10 @@ public class Xtron_Cpu {
                                 acumulator = acumulator / Integer.parseInt(memory[Integer.parseInt(operand)]);
 
                             } else {
-                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta dividir  la posicion " + operand + "de memoria que es nula o es cero");
+                                throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to divide the position " + operand + " It is null or cero");
                             }
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede dividir  al  acumulador");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be divide into the accumulator");
                             ///error de compilacion
                         }
                         break;
@@ -154,12 +155,12 @@ public class Xtron_Cpu {
                                 acumulator = acumulator * Integer.parseInt(memory[Integer.parseInt(operand)]);
 
                             } else {
-                                throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta multiplicar   la posicion " + operand + "de memoria que es nula ");
+                                throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to multiply the position " + operand + " It is null ");
 
                             }
 
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede multiplicar al  acumulador");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be multiply into the accumulator");
                         }
                         break;
                     case "40":
@@ -170,7 +171,7 @@ public class Xtron_Cpu {
                             i = Integer.parseInt(operand) - 1;
 
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCH ");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is not an instructional program so you can not run the BRANCH ");
 
                         }
                         break;
@@ -182,8 +183,8 @@ public class Xtron_Cpu {
                                 i = Integer.parseInt(operand) - 1;
                             }
                         } else {
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is not an instructional program so you can not run the BRANCHNEG ");
 
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCHNEG ");
                         }
                         break;
                     case "42":
@@ -195,7 +196,7 @@ public class Xtron_Cpu {
 
                             }
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCHZERO ");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is not an instructional program so you can not run the BRANCHZERO ");
                             ///error de compilacion
                         }
                         break;
@@ -204,11 +205,11 @@ public class Xtron_Cpu {
                         return memory;
 
                     default:
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la instrucion" + operateCode + " no existe en el lenguaje XTRON ");
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operateCode + "not exist in the language XTRON");
 
                 }
                 if (acumulator < -9999 || acumulator > 9999) {
-                    throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + "del programa desborda el acumulador y a provocado un error grave");
+                    throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) +"program and the accumulator overflows caused a serious error");
                 }
                 instructionCounter++;
             }
@@ -227,7 +228,7 @@ public class Xtron_Cpu {
         chargeMemory(program);
         instructionCounter = positionIntruction;
 
-        while (instructionCounter <= totalInstruction) {
+        while (instructionCounter < totalInstruction) {
 
             instructionRegister = memory[instructionCounter];
             operateCode = instructionRegister.substring(0, 2);
@@ -241,7 +242,7 @@ public class Xtron_Cpu {
                     if (Integer.parseInt(operand) >= totalInstruction) {
                         while (correcto == false) {
 
-                            numero = JOptionPane.showInputDialog("Ingrese su numero: ");
+                            numero = JOptionPane.showInputDialog("Enter a number: ");
                             correcto = validaNumero(numero);
                         }
                         memory[Integer.parseInt(operand)] = numero + "";
@@ -251,7 +252,9 @@ public class Xtron_Cpu {
                         break;
 
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede guardar ningun numero en esa pocision");
+                        throw new Xtron_Exeption("*** Xtron execution abnormally terminated   ***\n"
+                                + "Line:  " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + ""
+                                + " Memory is a program instruction so you can not save any number in that pocision");
                     }
                 case "11":
                     //  "WRITE";toma una palabra de una ubicacion espesifica y la imprime en pantalla
@@ -263,8 +266,7 @@ public class Xtron_Cpu {
                         break;
 
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta mostrar la posicion " + operand + "que es nula");
-
+                        throw new Xtron_Exeption("*** Xtron execution abnormally terminated   ***\\n\"" + (instructionCounter + 1) + " generates error since attempts to show the position " + operand + "It is null");
                     }
 
                 case "20":
@@ -278,12 +280,12 @@ public class Xtron_Cpu {
                             }
                             break;
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta cargar la posicion " + operand + "que es nula");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to load the position" + operand + "It is null");
 
                         }
 
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede cargar en el acumuador");
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision" + operand + " Memory is an instruction program so it can not be loaded into the accumulator");
                     }
                 case "21":
                     // "STORE";almacena el acumulador en una pocision de memoria
@@ -294,7 +296,7 @@ public class Xtron_Cpu {
                             return memory;
                         }
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se puede almacenar el acumulador en esa pocision");
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is a program instruction so you can not store the accumulator value in that pocision");
                         ///error de compilacion
                     }
                     break;
@@ -309,11 +311,11 @@ public class Xtron_Cpu {
                                 return memory;
                             }
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta sumar la posicion " + operand + "de memoria que es nula");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to add the position" + operand + "It is null");
                         }
 
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede sumar al  acumulador");
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be add into the accumulator");
                     }
                     break;
                 case "31":
@@ -326,11 +328,12 @@ public class Xtron_Cpu {
                                 return memory;
                             }
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta restar la posicion " + operand + "de memoria que es nula");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to subtract the position" + operand + "It is null");
                         }
 
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede restar al  acumulador");
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be subtract into the accumulator");
+
                     }                            ///error de compilacion
 
                     break;
@@ -343,10 +346,10 @@ public class Xtron_Cpu {
                                 return memory;
                             }
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta dividir  la posicion " + operand + "de memoria que es nula o es cero");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to subtract the position " + operand + " It is null");
                         }
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede dividir  al  acumulador");
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be divide into the accumulator");
                         ///error de compilacion
                     }
                     break;
@@ -359,12 +362,12 @@ public class Xtron_Cpu {
                                 return memory;
                             }
                         } else {
-                            throw new Xtron_Exeption("Error de compilacion, la linea " + instructionCounter + " genera error ya que intenta multiplicar   la posicion " + operand + "de memoria que es nula ");
+                            throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It generates error because you try to multiply the position " + operand + " It is null ");
 
                         }
 
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria es una instruccion del programa por lo que no se le  puede multiplicar al  acumulador");
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is an instruction program so it can not be multiply into the accumulator");
                     }
                     break;
                 case "40":
@@ -375,7 +378,7 @@ public class Xtron_Cpu {
                         instructionCounter = Integer.parseInt(operand) - 1;
                         ciclo = true;
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCH ");
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is not an instructional program so you can not run the BRANCH ");
 
                     }
                     break;
@@ -387,12 +390,12 @@ public class Xtron_Cpu {
                             instructionCounter = Integer.parseInt(operand) - 1;
                             ciclo = true;
 
-                        } else {
+                        } else if (ciclo == false) {
                             return memory;
                         }
                     } else {
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is not an instructional program so you can not run the BRANCHNEG ");
 
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCHNEG ");
                     }
                     break;
                 case "42":
@@ -402,21 +405,20 @@ public class Xtron_Cpu {
                         if (acumulator == 0) {
                             instructionCounter = Integer.parseInt(operand) - 1;
                             ciclo = true;
-                        } else {
+                        } else if (ciclo == false) {
                             return memory;
                         }
                     } else {
-                        throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la pocision" + operand + " de memoria no es una instruccion del programa por lo que no se puede ejecutar el BRANCHZERO ");
-                        ///error de compilacion
+                        throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operand + " Memory is not an instructional program so you can not run the BRANCHZERO ");                        ///error de compilacion
                     }
                     break;
                 case "43":
                     // "HALT";finaliza  el programa
-                    terminateProgram=true;
+                    terminateProgram = true;
                     return memory;
 
                 default:
-                    throw new Xtron_Exeption("Error de compilacion,la linea " + instructionCounter + " genera conflictos ya que la instrucion" + operateCode + " no existe en el lenguaje XTRON ");
+                    throw new Xtron_Exeption("\"*** Xtron execution abnormally terminated   ***\\\\n\\\"\", Line: " + (instructionCounter + 1) + " It creates conflicts since the pocision " + operateCode + "not exist in the language XTRON");
             }
 
             instructionCounter++;
@@ -433,11 +435,12 @@ public class Xtron_Cpu {
 
     //carga la memoria con el nuevo programa 
     private void chargeMemory(String[] program) {
+
         for (int i = 0; i < program.length; i++) {
             memory[i] = program[i];
         }
     }
-    
+
     public boolean getTerminateProgram() {
         return terminateProgram;
     }
@@ -503,8 +506,30 @@ public class Xtron_Cpu {
     }
 
     private boolean validaNumero(String numero) {
+        double numero2 = 0;
+        boolean bandera = false;
 
-        return true;
+        try {
+            numero2 = Double.parseDouble(numero);
+
+            bandera = true;
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Only use integer numbers please ");
+            bandera = false;
+            return bandera;
+        }
+
+        if (bandera) {
+            if (numero2 <= 9999 && numero2 >= -9999) {
+                bandera = true;
+
+            } else {
+                bandera = false;
+                JOptionPane.showMessageDialog(null, "Numbers only allowed between -9999 and 9999");
+            }
+        }
+
+        return bandera;
     }
-
 }
